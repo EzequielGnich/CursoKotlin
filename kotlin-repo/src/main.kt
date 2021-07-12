@@ -45,4 +45,29 @@ fun main() {
 
     // propriedade da linguagem
     println("Propriedades da linguagem ${str.length}")
+
+    // Funções
+    val a: Int = 10
+    val b: Int = 20
+    val c: Int = 3
+
+    fun calc(a: Int, b: Int, c: Int) {
+        println("O resultado do cálculo é: ${a + b + c}")
+    }
+
+    calc(a, b, c)
+
+    fun hello(name: String) : String {
+        return "Olá $name"
+    }
+
+    val h = hello("Ezequiel")
+    println(h)
+
+    // Funções em uma única linha
+    fun helloOneLine(name: String) : String = "Olá $name"
+    println(helloOneLine("Ezequiel"))
+
+    fun sum(a: Int, b: Int) : Int = a + b
+    println("A soma é ${sum(10,20)}")
 }
