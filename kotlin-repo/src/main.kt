@@ -12,7 +12,7 @@
  * */
 
 fun main() {
-    var name: String = "Ezequiel Gnich";
+    val name: String = "Ezequiel Gnich";
 
     println("Hello world $name")
 
