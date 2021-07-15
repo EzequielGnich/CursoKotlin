@@ -5,7 +5,7 @@ import repository.ContactRepository
 import java.lang.Exception
 
 class ContactBusiness {
-    fun validateSave(name: String, phone: String) {
+    private fun validateSave(name: String, phone: String) {
         if (name == ""){
             throw Exception("Nome é obrigatório")
         }
@@ -14,7 +14,7 @@ class ContactBusiness {
         }
     }
 
-    fun validateDelete(name: String, phone: String) {
+    private fun validateDelete(name: String, phone: String) {
         if (name == "" || phone == ""){
             throw Exception("Selecione um contato para excluir")
         }
@@ -32,5 +32,9 @@ class ContactBusiness {
 
         val contact = ContactEntity(name, phone)
         ContactRepository.deleteContact(contact)
+    }
+
+    fun getContactList(): List<ContactEntity> {
+        return ContactRepository.getContactList()
     }
 }

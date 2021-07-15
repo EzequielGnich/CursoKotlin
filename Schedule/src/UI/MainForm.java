@@ -1,9 +1,13 @@
 package UI;
 
+import business.ContactBusiness;
+import entity.ContactEntity;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class MainForm extends JFrame {
     private JTable tableContacts;
@@ -11,6 +15,8 @@ public class MainForm extends JFrame {
     private JButton addContact;
     private JButton removeContact;
     private JLabel labelContact;
+
+    private ContactBusiness mContactBusiness;
 
     public MainForm() {
         setContentPane(rootPanel);
@@ -22,9 +28,15 @@ public class MainForm extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        setListeners();
-    }
+        mContactBusiness = new ContactBusiness();
 
+        setListeners();
+        loadContacts();
+    }
+    private void loadContacts() {
+        List<ContactEntity> contactList = mContactBusiness.getContactList();
+    }
+    
     private void setListeners() {
         addContact.addActionListener(new ActionListener() {
             @Override
