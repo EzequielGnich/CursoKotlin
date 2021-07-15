@@ -20,6 +20,15 @@ class ContactBusiness {
         }
     }
 
+    fun getContactCountDescription(): String{
+        val list = getContactList()
+        return when {
+            list.isEmpty() -> "0 contatos"
+            list.size == 1 -> "1 contato"
+            else -> "${list.size} contatos"
+        }
+    }
+
     fun saveContact(name: String, phone: String) {
         validateSave(name, phone)
 
