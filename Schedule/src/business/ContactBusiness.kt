@@ -1,5 +1,7 @@
 package business
 
+import entity.ContactEntity
+import repository.ContactRepository
 import java.lang.Exception
 
 class ContactBusiness {
@@ -18,11 +20,21 @@ class ContactBusiness {
         }
     }
 
-    private fun saveContact(name: String, phone: String) {
+    fun saveContact(name: String, phone: String) {
         validateSave(name, phone)
+
+        val contact = ContactEntity(name, phone)
+        ContactRepository.saveContact(contact)
     }
 
-    private fun deleteContact(name: String, phone: String) {
+    fun deleteContact(name: String, phone: String) {
         validateDelete(name, phone)
+
+        val contact = ContactEntity(name, phone)
+        ContactRepository.deleteContact(contact)
+    }
+
+    fun getContactList(): List<ContactEntity> {
+        return ContactRepository.getContactList()
     }
 }

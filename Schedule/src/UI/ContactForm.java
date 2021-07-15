@@ -38,7 +38,7 @@ public class ContactForm extends JFrame {
         saveContact.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
             }
         });
     }
