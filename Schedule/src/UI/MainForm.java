@@ -42,12 +42,12 @@ public class MainForm extends JFrame {
     private void loadContacts() {
         List<ContactEntity> contactList = mContactBusiness.getContactList();
 
-        String[] columnsNames = {"Nome", "Telefone"};
+        String[] columnsNames = {"Nome", "Telefone", "Ações"};
 
-        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnsNames);
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0][0], columnsNames);
 
         for (ContactEntity contact : contactList) {
-            Object[] o = new Object[2];
+            Object[] o = new Object[3];
 
             o[0] = contact.getName();
             o[1] = contact.getPhone();
@@ -57,8 +57,6 @@ public class MainForm extends JFrame {
 
         tableContacts.clearSelection();
         tableContacts.setModel(model);
-
-        labelContactCount.setText(mContactBusiness.getContactCountDescription());
     }
 
     private void setListeners() {
