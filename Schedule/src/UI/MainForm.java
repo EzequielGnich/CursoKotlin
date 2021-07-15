@@ -4,6 +4,8 @@ import business.ContactBusiness;
 import entity.ContactEntity;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +20,8 @@ public class MainForm extends JFrame {
     private JLabel labelContactCount;
 
     private ContactBusiness mContactBusiness;
+    private String mName = "";
+    private String mPhone = "";
 
     public MainForm() {
         setContentPane(rootPanel);
@@ -34,15 +38,16 @@ public class MainForm extends JFrame {
         setListeners();
         loadContacts();
     }
+
     private void loadContacts() {
         List<ContactEntity> contactList = mContactBusiness.getContactList();
 
-        String[] columnsNames = {"Nome", "Telefone"};
+        String[] columnsNames = {"Nome", "Telefone", "Ações"};
 
-        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnsNames);
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0][0], columnsNames);
 
         for (ContactEntity contact : contactList) {
-            Object[] o = new Object[2];
+            Object[] o = new Object[3];
 
             o[0] = contact.getName();
             o[1] = contact.getPhone();
@@ -52,8 +57,6 @@ public class MainForm extends JFrame {
 
         tableContacts.clearSelection();
         tableContacts.setModel(model);
-
-        labelContactCount.setText(mContactBusiness.getContactCountDescription());
     }
 
     private void setListeners() {
@@ -65,11 +68,33 @@ public class MainForm extends JFrame {
             }
         });
 
+        tableContacts.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    if (tableContacts.getSelectedRow() != -1) {
+                        mName = tableContacts.getValueAt(tableContacts.getSelectedRow(), 0).toString();
+                        mPhone = tableContacts.getValueAt(tableContacts.getSelectedRow(), 1).toString();
+                    }
+                }
+            }
+        });
+
         removeContact.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    mContactBusiness.deleteContact(mName, mPhone);
+                    loadContacts();
 
+                    mName = "";
+                    mPhone = "";
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(new JFrame(), err.getMessage());
+                }
             }
         });
+
+
     }
 }
