@@ -1,9 +1,11 @@
 package business
 
+import entity.ContactEntity
+import repository.ContactRepository
 import java.lang.Exception
 
 class ContactBusiness {
-    private fun validateSave(name: String, phone: String) {
+    fun validateSave(name: String, phone: String) {
         if (name == ""){
             throw Exception("Nome é obrigatório")
         }
@@ -12,17 +14,23 @@ class ContactBusiness {
         }
     }
 
-    private fun validateDelete(name: String, phone: String) {
+    fun validateDelete(name: String, phone: String) {
         if (name == "" || phone == ""){
             throw Exception("Selecione um contato para excluir")
         }
     }
 
-    private fun saveContact(name: String, phone: String) {
+    fun saveContact(name: String, phone: String) {
         validateSave(name, phone)
+
+        val contact = ContactEntity(name, phone)
+        ContactRepository.saveContact(contact)
     }
 
-    private fun deleteContact(name: String, phone: String) {
+    fun deleteContact(name: String, phone: String) {
         validateDelete(name, phone)
+
+        val contact = ContactEntity(name, phone)
+        ContactRepository.deleteContact(contact)
     }
 }
